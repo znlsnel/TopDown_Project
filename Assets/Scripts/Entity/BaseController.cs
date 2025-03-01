@@ -7,6 +7,33 @@ public class BaseController : MonoBehaviour
 
     [SerializeField] private SpriteRenderer characterRenderer;
     [SerializeField] private Transform weaponPivot;
+    [SerializeField] public WeaponHandler WeaponPrefab;
+    protected WeaponHandler weaponHandler;
+
+    protected bool isAttacking;
+    private float timeSinceLastAttack = float.MaxValue;
+
+    private void HandleAttackDelay()
+    {
+        if (weaponHandler == null)
+            return;
+
+        if (timeSinceLastAttack <= weaponHandler.Delay)
+            timeSinceLastAttack += Time.deltaTime;
+        
+        if (isAttacking && timeSinceLastAttack > weaponHandler.Delay)
+        {
+            timeSinceLastAttack = 0;
+            Attack();
+        }
+
+    }
+
+    protected virtual void Attack()
+    {
+        if (lookDirection != Vector2.zero)
+            weaponHandler?.Attack();
+    }
 
     protected Vector2 movementDirection = Vector2.zero;
     public Vector2 MovementDirection { get => movementDirection; }
@@ -17,6 +44,9 @@ public class BaseController : MonoBehaviour
     private Vector2 knockback = Vector2.zero;
     private float knockbackDuration = 0.0f;
 
+
+
+
     protected AnimationHandler animationHandler;
     protected StatHandler statHandler;
     protected virtual void Awake()
@@ -24,6 +54,12 @@ public class BaseController : MonoBehaviour
         _rigidbody = GetComponent<Rigidbody2D>();
 		animationHandler = GetComponent<AnimationHandler>();
 		statHandler = GetComponent<StatHandler>();
+
+
+		if (WeaponPrefab != null)
+			weaponHandler = Instantiate(WeaponPrefab, weaponPivot);
+		else
+			weaponHandler = GetComponentInChildren<WeaponHandler>();
 	}
 
     protected virtual void Start()
@@ -35,15 +71,16 @@ public class BaseController : MonoBehaviour
     {
         handleAction();
         Rotate(lookDirection);
-
+		HandleAttackDelay();
 	}
+
 
     protected virtual void FixedUpdate()
     {
         Movment(movementDirection);
         if (knockbackDuration > 0.0f)
             knockbackDuration -= Time.fixedDeltaTime;
-
+         
     }
      
     protected virtual void handleAction()

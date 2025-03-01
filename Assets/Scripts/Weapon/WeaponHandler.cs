@@ -22,13 +22,13 @@ public class WeaponHandler : MonoBehaviour
 
     [Header("Knock Back Info")]
     [SerializeField] private bool isOnKnockback = false;
+    [SerializeField] private float knockbackTime = 0.5f;
+    [SerializeField] private float knockbackPower = 0.1f;
+
+    public float KnockbackPower { get => knockbackPower; set => knockbackPower = value; }
+    public float KnockbackTime {  get => knockbackTime; set => knockbackTime = value; }
     public bool IsInKnockback { get => isOnKnockback; set => isOnKnockback = value; }
 
-    [SerializeField] private float knockbackPower = 0.1f;
-    public float KnockbackPower { get => knockbackPower; set => knockbackPower = value; }
-
-    [SerializeField] private float knockbackTime = 0.5f;
-    public float KnockbackTime {  get => knockbackTime; set => knockbackTime = value; }
 
     private static readonly int IsAttack = Animator.StringToHash("IsAttack");
 

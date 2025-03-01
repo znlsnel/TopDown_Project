@@ -24,6 +24,8 @@ public class PlayerController : BaseController
 			lookDirection = Vector2.zero;
 		else
 			lookDirection = lookDirection.normalized;
+
+		isAttacking = Input.GetMouseButton(0);
 	}
 	
 
