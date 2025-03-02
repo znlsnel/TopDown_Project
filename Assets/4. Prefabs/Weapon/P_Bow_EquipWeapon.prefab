@@ -167,7 +167,7 @@ Transform:
   m_GameObject: {fileID: 9193022699963619035}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.3, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -198,11 +198,11 @@ MonoBehaviour:
   isOnKnockback: 1
   knockbackTime: 1
   knockbackPower: 0.1
-  progectileSpawnPosition: {fileID: 6511488940304400690}
+  projectileSpawnPosition: {fileID: 6511488940304400690}
   bulletIndex: 0
   bulletSize: 0.7
   duration: 10
   spread: 1
   numberofProjectilesPerShot: 3
   multipleProjectilesAngle: 3
-  projectileColor: {r: 1, g: 1, b: 1, a: 0}
+  projectileColor: {r: 1, g: 1, b: 1, a: 1}

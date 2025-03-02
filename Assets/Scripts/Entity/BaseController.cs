@@ -69,7 +69,7 @@ public class BaseController : MonoBehaviour
 
     protected virtual void Update()
     {
-        handleAction();
+        HandleAction();
         Rotate(lookDirection);
 		HandleAttackDelay();
 	}
@@ -83,10 +83,10 @@ public class BaseController : MonoBehaviour
          
     }
      
-    protected virtual void handleAction()
+    protected virtual void HandleAction()
     {
 
-    }
+    } 
 
     private void Movment(Vector2 direction)
     {

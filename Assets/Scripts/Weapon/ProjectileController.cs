@@ -13,6 +13,7 @@ public class ProjectileController : MonoBehaviour
 
 	private Rigidbody2D _rigidbody;
 	private SpriteRenderer spriteRenderer;
+	private ProjectileManager projectileManager;
 
 	public bool fxOnDestory = true;
 
@@ -43,12 +44,29 @@ public class ProjectileController : MonoBehaviour
 			DestroyProjectile(collision.ClosestPoint(transform.position) - direction * .2f, fxOnDestory);
 
 		else if (rangeWeaponHandler.target.value == (rangeWeaponHandler.target.value | (1 << collision.gameObject.layer)))
+		{
+			ResourceController resourceController = collision.GetComponent<ResourceController>();	
+			if (resourceController != null)
+			{
+				resourceController.ChangeHealth(-rangeWeaponHandler.Power);
+				if (rangeWeaponHandler.IsOnKnockback)
+				{
+					BaseController controller = collision.GetComponent<BaseController>();
+					if (controller != null)
+						controller.ApplyKnockback(transform, rangeWeaponHandler.KnockbackPower, rangeWeaponHandler.KnockbackTime);
+					
+				}
+
+			}
+
 			DestroyProjectile(collision.ClosestPoint(transform.position), fxOnDestory);
+		}
 
 	}
 
-	public void Init(Vector2 direction, RangeWeaponHandler weaponHandler)
+	public void Init(Vector2 direction, RangeWeaponHandler weaponHandler, ProjectileManager pjm)
 	{
+		this.projectileManager = pjm;
 		rangeWeaponHandler = weaponHandler;
 
 		this.direction = direction;
@@ -68,6 +86,8 @@ public class ProjectileController : MonoBehaviour
 
 	private void DestroyProjectile(Vector3 position, bool createFx)
 	{
+		if (createFx)
+			projectileManager.CreateImpactParticlesAtPostion(position, rangeWeaponHandler);
 		Destroy(this.gameObject);
 	}
 }

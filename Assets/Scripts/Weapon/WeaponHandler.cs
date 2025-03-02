@@ -27,7 +27,7 @@ public class WeaponHandler : MonoBehaviour
 
     public float KnockbackPower { get => knockbackPower; set => knockbackPower = value; }
     public float KnockbackTime {  get => knockbackTime; set => knockbackTime = value; }
-    public bool IsInKnockback { get => isOnKnockback; set => isOnKnockback = value; }
+    public bool IsOnKnockback { get => isOnKnockback; set => isOnKnockback = value; }
 
 
     private static readonly int IsAttack = Animator.StringToHash("IsAttack");
@@ -39,7 +39,7 @@ public class WeaponHandler : MonoBehaviour
 
     protected virtual void Awake()
     {
-        Controller = GetComponentInChildren<BaseController>();
+        Controller = GetComponentInParent<BaseController>();
         animator = GetComponentInChildren<Animator>();
         weaponRenderer = GetComponentInChildren<SpriteRenderer>();
 
