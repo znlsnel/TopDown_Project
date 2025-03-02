@@ -196,8 +196,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   isOnKnockback: 1
-  knockbackTime: 3
-  knockbackPower: 0.1
+  knockbackTime: 0.3
+  knockbackPower: 3
+  attackSoundClip: {fileID: 8300000, guid: e4e5122c29072b34780c403d235035f6, type: 3}
   projectileSpawnPosition: {fileID: 6511488940304400690}
   bulletIndex: 1
   bulletSize: 1

@@ -29,6 +29,8 @@ public class WeaponHandler : MonoBehaviour
     public float KnockbackTime {  get => knockbackTime; set => knockbackTime = value; }
     public bool IsOnKnockback { get => isOnKnockback; set => isOnKnockback = value; }
 
+    
+	public AudioClip attackSoundClip;
 
     private static readonly int IsAttack = Animator.StringToHash("IsAttack");
 
@@ -37,7 +39,8 @@ public class WeaponHandler : MonoBehaviour
     private Animator animator;
     private SpriteRenderer weaponRenderer;
 
-    protected virtual void Awake()
+
+	protected virtual void Awake()
     {
         Controller = GetComponentInParent<BaseController>();
         animator = GetComponentInChildren<Animator>();
@@ -55,15 +58,19 @@ public class WeaponHandler : MonoBehaviour
     public virtual void Attack()
     {
 		AttakAnimation();
-    }
+
+		if (attackSoundClip != null)
+			SoundManager.PlayClip(attackSoundClip);
+	}
 
     public void AttakAnimation()
     {
+        animator.SetTrigger("IsAttack");
 
-    }
+	}
 
     public virtual  void Rotate(bool isLeft)
     {
-        weaponRenderer.flipX = isLeft; 
+        weaponRenderer.flipY = isLeft; 
     }
 }

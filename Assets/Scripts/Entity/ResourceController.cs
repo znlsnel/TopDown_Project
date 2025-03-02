@@ -36,7 +36,7 @@ public class ResourceController : MonoBehaviour
 				animationHandler.InvincibilityEnd();
 		}
 	}
-
+	
 	public bool ChangeHealth(float change)
 	{
 		if (change == 0 || timeSinceLastChange < healthChangeDelay)
