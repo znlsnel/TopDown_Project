@@ -78,8 +78,16 @@ public class EnemyManager : MonoBehaviour
 
 		GameObject spawnedEnemy = Instantiate(randomPrefab, new Vector3(randomPosition.x, randomPosition.y), Quaternion.identity);
 		EnemyController enemyController = spawnedEnemy.GetComponent<EnemyController>();
+		enemyController.Init(this, gameManager.player.transform);
 
 		activeEnemies.Add(enemyController);
+	}
+
+	public void RemoveEnemyOnDeath(EnemyController enemy)
+	{
+		activeEnemies.Remove(enemy);
+		if (enemySpawnComplite && activeEnemies.Count == 0)
+			gameManager.EndOfWave();
 	}
 
 	private void OnDrawGizmosSelected()
@@ -100,5 +108,7 @@ public class EnemyManager : MonoBehaviour
 		if (Input.GetKeyDown(KeyCode.Space))
 			StartWave(1);
 	}
+
+
 }
 

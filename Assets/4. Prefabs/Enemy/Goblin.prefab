@@ -165,7 +165,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterRenderer: {fileID: 7920891018828266203}
   weaponPivot: {fileID: 6893956311255127993}
-  WeaponPrefab: {fileID: 0}
+  WeaponPrefab: {fileID: 7275362572920901320, guid: 36ed99a96de33bd42b28403f50f02513, type: 3}
   followRange: 15
 --- !u!1 &4153388458261876988
 GameObject:
@@ -302,7 +302,7 @@ Transform:
   m_GameObject: {fileID: 9190412530823662408}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0.39, y: 0.42, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
