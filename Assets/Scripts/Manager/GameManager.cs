@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     private ResourceController _playerResourceController;
 
     [SerializeField] private int currentWaveIndex = 0;
+    [SerializeField] private int currentStageIndex = 0;
 
     private EnemyManager enemyManager;
     private CameraShake cameraShake;
@@ -57,5 +58,27 @@ public class GameManager : MonoBehaviour
             StartGame(); 
         }
     }
+    public void StartStage()
+    {
+        // StageInfo stageInfo = GetStageInfo(currentStageIndex);
+
+        // if (stageInfo == null)
+        // {
+        //     Debug.Log("스테이지 정보가 없습니다.");
+        //     return;
+        // }
+
+       // uiManager.ChangeWave(currentStageIndex + 1);
+
+       // enemyManager.StartStage(stageInfo.waves[currentWaveIndex]);
+    }
+
+    // private StageInfo GetStageInfo(int stageKey)
+    // {
+    //     foreach (var stage in StageData.Stages)
+    //     {
+    //         //
+    //     }
+    // }
 
 }

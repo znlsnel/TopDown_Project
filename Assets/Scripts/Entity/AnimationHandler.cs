@@ -12,18 +12,9 @@ public class AnimationHandler : MonoBehaviour
 		animator = GetComponentInChildren<Animator>();
 	}
 
-	public void Move(Vector2 obj)
-	{
-		animator.SetBool(IsMoving, obj.magnitude > 0.5f);
-	}
+    public void Move(Vector2 obj) => animator.SetBool(IsMoving, obj.magnitude > 0.5f);
 
-	public void Damage()
-	{
-		animator.SetBool(IsDamage, true);
-	}
+    public void Damage() => animator.SetBool(IsDamage, true);
 
-	public void InvincibilityEnd()
-	{
-		animator.SetBool(IsDamage, false); 
-	}
-}
+    public void InvincibilityEnd() => animator.SetBool(IsDamage, false);
+} 
