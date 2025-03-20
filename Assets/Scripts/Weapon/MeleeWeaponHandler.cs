@@ -35,7 +35,6 @@ public class MeleeWeaponHandler : WeaponHandler
 
 	public override void Rotate(bool isLeft)
 	{
-			transform.eulerAngles = new Vector3(0, isLeft ? 180 : 0, 0);
-
+		transform.eulerAngles = new Vector3(0, isLeft ? 180 : 0, 0); 
 	}
 } 

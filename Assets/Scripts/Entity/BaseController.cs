@@ -80,9 +80,8 @@ public class BaseController : MonoBehaviour
         Movment(movementDirection);
         if (knockbackDuration > 0.0f)
             knockbackDuration -= Time.fixedDeltaTime;
-         
     }
-     
+      
     protected virtual void HandleAction()
     {
 

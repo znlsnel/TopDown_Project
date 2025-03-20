@@ -1,3 +1,4 @@
+using Unity.Cinemachine;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -10,16 +11,23 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int currentWaveIndex = 0;
 
     private EnemyManager enemyManager;
-
+    private CameraShake cameraShake;
 	private void Awake()
 	{
 		instance = this;
-        player = FindFirstObjectByType<PlayerController>();
+		cameraShake = FindFirstObjectByType<CameraShake>();
+		player = FindFirstObjectByType<PlayerController>();
         player.Init(this);
 
         enemyManager = GetComponentInChildren<EnemyManager>();
         enemyManager.Init(this);
+        MainCameraShake();
 	}
+
+    public void MainCameraShake()
+    {
+        cameraShake.ShakeCameara(1, 10, 10);
+    }
 
     public void StartGame()
     {
