@@ -1,3 +1,4 @@
+using System;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -14,6 +15,9 @@ public class ResourceController : MonoBehaviour
 
 	public float CurrentHealth { get; private set; }
 	public float MaxHealth => statHandler.Health;
+
+	public AudioClip damageSound;
+	private Action<float, float> OnChangedHealth;
 
 	private void Awake()
 	{
@@ -45,6 +49,8 @@ public class ResourceController : MonoBehaviour
 		timeSinceLastChange = 0f;
 		CurrentHealth = Mathf.Clamp(CurrentHealth + change, 0, MaxHealth);
 
+		OnChangedHealth?.Invoke(CurrentHealth, MaxHealth);
+
 		if (change < 0)
 			animationHandler.Damage();
 
@@ -52,10 +58,22 @@ public class ResourceController : MonoBehaviour
 			Death();
 
 		return true;
-	}
+	} 
 
 	private void Death()
 	{
 		baseController.Death();
 	}
+
+	public void AddHealthChangeEvent(Action<float, float> action)
+	{
+		OnChangedHealth += action;
+	}
+
+	public void RemoveHealthCangeEvent(Action<float, float> action)
+	{
+		OnChangedHealth -= action;
+	}
+
+
 }

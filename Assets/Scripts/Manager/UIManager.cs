@@ -17,11 +17,11 @@ public class UIManager : MonoBehaviour
 
     private void Awake()
     {
-        homeUI = GetComponentInChildren<HomeUI>();
+        homeUI = GetComponentInChildren<HomeUI>(true);
         homeUI.Init(this);
-        gameUI = GetComponentInChildren<GameUI>();
+        gameUI = GetComponentInChildren<GameUI>(true); 
         gameUI.Init(this);
-        gameOverUI = GetComponentInChildren<GameOverUI>();
+        gameOverUI = GetComponentInChildren<GameOverUI>(true);
         gameOverUI.Init(this);
 
         ChangeState(UIState.Home);

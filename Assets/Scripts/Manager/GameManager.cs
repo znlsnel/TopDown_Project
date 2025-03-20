@@ -12,18 +12,37 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int currentStageIndex = 0;
 
     private EnemyManager enemyManager;
+    private UIManager uiManager;
     private CameraShake cameraShake;
+
+    public static bool isFirstLoading = false;
 	private void Awake()
 	{
 		instance = this;
 		cameraShake = FindFirstObjectByType<CameraShake>();
 		player = FindFirstObjectByType<PlayerController>();
+		uiManager = FindFirstObjectByType<UIManager>();
         player.Init(this);
 
         enemyManager = GetComponentInChildren<EnemyManager>();
         enemyManager.Init(this);
-        MainCameraShake();
+
+        _playerResourceController = player.GetComponent<ResourceController>();
+        _playerResourceController.RemoveHealthCangeEvent(uiManager.ChangePlayerHP);
+        _playerResourceController.AddHealthChangeEvent(uiManager.ChangePlayerHP);
 	}
+    
+
+    private void Start()
+    {
+        if (!isFirstLoading)
+        {
+            StartGame();
+        }
+        else
+            isFirstLoading = true;
+        
+    }
 
     public void MainCameraShake()
     {
@@ -32,6 +51,7 @@ public class GameManager : MonoBehaviour
 
     public void StartGame()
     {
+        uiManager.SetPlayGame();
         StartNextWave();
     }
 
@@ -39,6 +59,7 @@ public class GameManager : MonoBehaviour
     {
         currentWaveIndex += 1;
         enemyManager.StartWave(1 + currentWaveIndex / 5);
+        uiManager.ChangeWave(currentWaveIndex); 
     }
 
     public void EndOfWave()
@@ -49,6 +70,7 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         enemyManager.StopWave();
+        uiManager.SetGameOver();
     }
 
 	private void Update()
