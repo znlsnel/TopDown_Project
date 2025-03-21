@@ -2755,8 +2755,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbb83f314344e1e47a04f857e7a8975c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 10
-  speed: 10
+  statData: {fileID: 11400000, guid: db3c6b9e110d0f441a56864a579d8e7b, type: 2}
 --- !u!114 &223178112
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3232,7 +3231,7 @@ MonoBehaviour:
     DefaultMode: 2
   DefaultBlend:
     Style: 1
-    Time: 2
+    Time: 1
     CustomCurve:
       serializedVersion: 2
       m_Curve: []
@@ -13735,6 +13734,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1682927079}
   - component: {fileID: 1682927078}
+  - component: {fileID: 1682927080}
   m_Layer: 0
   m_Name: ProjectileManager
   m_TagString: Untagged
@@ -13774,6 +13774,22 @@ Transform:
   - {fileID: 940860665}
   m_Father: {fileID: 819690369}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1682927080
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1682927077}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9d2d012c7e1936448255425b0a16a2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefabs:
+  - {fileID: 3162559911101850785, guid: 18997eaf75f41b14482e0b48fd82e849, type: 3}
+  - {fileID: 5432521267967332280, guid: 07b0888881aaf0f49b242e9314dc9ba6, type: 3}
+  ArrowCnt: 0
 --- !u!1 &1709988324
 GameObject:
   m_ObjectHideFlags: 0

@@ -281,8 +281,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbb83f314344e1e47a04f857e7a8975c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 10
-  speed: 2
+  statData: {fileID: 11400000, guid: 0cf23dbf74925424cb2ee65f34ae8511, type: 2}
 --- !u!114 &970956690635460486
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -308,3 +307,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthChangeDelay: 0.5
+  damageSound: {fileID: 0}

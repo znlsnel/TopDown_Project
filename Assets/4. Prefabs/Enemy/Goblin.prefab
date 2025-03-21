@@ -125,6 +125,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthChangeDelay: 0.5
+  damageSound: {fileID: 0}
 --- !u!114 &1876614948990973369
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -149,8 +150,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbb83f314344e1e47a04f857e7a8975c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 10
-  speed: 2
+  statData: {fileID: 11400000, guid: 2ed44c5a55120e247a582b40a8331be1, type: 2}
 --- !u!114 &-6641773552064942170
 MonoBehaviour:
   m_ObjectHideFlags: 0

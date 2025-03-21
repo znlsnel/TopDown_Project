@@ -24,7 +24,7 @@ public class SoundManager : MonoBehaviour
 	{
 		ChangeBackGroundMusic(musicClip);
 	}
-
+ 
 	public void ChangeBackGroundMusic(AudioClip clip)
 	{
 		musicAudioSource.Stop();

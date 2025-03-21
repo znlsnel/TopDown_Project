@@ -3,12 +3,12 @@ using UnityEngine;
 public class PlayerController : BaseController
 {
 	private GameManager gameManager;
-    private Camera camera;
+    private Camera cam;
 
 	public void Init(GameManager gameManager)
 	{
 		this.gameManager = gameManager;
-		camera = Camera.main;
+		cam = Camera.main;
 	}
 
 	protected override void HandleAction()
@@ -18,7 +18,7 @@ public class PlayerController : BaseController
 		movementDirection = new Vector2(horizontal, vertical).normalized;
 
 		Vector2 mousePosition = Input.mousePosition;
-		Vector2 worldPos = camera.ScreenToWorldPoint(mousePosition);
+		Vector2 worldPos = cam.ScreenToWorldPoint(mousePosition);
 		lookDirection = (worldPos - (Vector2)transform.position);
 
 		if (lookDirection.magnitude < .9f)
@@ -36,4 +36,23 @@ public class PlayerController : BaseController
 	}
 
 	 
+	 public void UseItem(ItemData itemData)
+	 {
+		foreach (var statEntry in itemData.statEntries)
+		{
+			statHandler.ModifyStat(statEntry.statType, statEntry.baseValue, itemData.isTemporary, itemData.duration);
+		}
+	 }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.TryGetComponent<ItemHandler>(out ItemHandler itemHandler)	)
+        {
+			if (itemHandler.ItemData == null)
+				return;
+
+            UseItem(itemHandler.ItemData);
+            Destroy(collision.gameObject);
+        }
+    }
 }

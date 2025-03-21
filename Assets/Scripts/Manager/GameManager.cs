@@ -11,11 +11,14 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int currentWaveIndex = 0;
     [SerializeField] private int currentStageIndex = 0;
 
-    private EnemyManager enemyManager;
+    private EnemyManager enemyManager; 
     private UIManager uiManager;
-    private CameraShake cameraShake;
+    private CameraShake cameraShake; 
+    private StageInstance currentStageInstance;
+
 
     public static bool isFirstLoading = false;
+
 	private void Awake()
 	{
 		instance = this;
@@ -52,7 +55,7 @@ public class GameManager : MonoBehaviour
     public void StartGame()
     {
         uiManager.SetPlayGame();
-        StartNextWave();
+        LoadOrStartNewStage();
     }
 
     void StartNextWave()
@@ -71,6 +74,7 @@ public class GameManager : MonoBehaviour
     {
         enemyManager.StopWave();
         uiManager.SetGameOver();
+        StageSaveManager.ClearSavedStage();
     }
 
 	private void Update()
@@ -80,27 +84,78 @@ public class GameManager : MonoBehaviour
             StartGame(); 
         }
     }
-    public void StartStage()
+    
+    public void StartStage(StageInstance stageInstance)
     {
-        // StageInfo stageInfo = GetStageInfo(currentStageIndex);
+        currentStageIndex = stageInstance.stageKey;
+        currentWaveIndex = stageInstance.currentWave;
 
-        // if (stageInfo == null)
-        // {
-        //     Debug.Log("스테이지 정보가 없습니다.");
-        //     return;
-        // }
+        StageInfo stageInfo = GetStageInfo(stageInstance.stageKey);
 
-       // uiManager.ChangeWave(currentStageIndex + 1);
+        if (stageInfo == null)
+        {
+            Debug.Log("스테이지 정보가 없습니다.");
+            StageSaveManager.ClearSavedStage();
+            currentStageInstance = null;
+            return;
+        }
 
-       // enemyManager.StartStage(stageInfo.waves[currentWaveIndex]);
+        stageInstance.SetStageInfo(stageInfo);
+
+        uiManager.ChangeWave(currentStageIndex + 1);
+        enemyManager.StartStage(currentStageInstance);
+        StageSaveManager.SaveStageInstance(currentStageInstance);
+    }
+ 
+    private void LoadOrStartNewStage()
+    {
+        StageInstance savedInstance = StageSaveManager.LoadStageInstance();
+
+        if (savedInstance != null)
+        {
+            currentStageInstance = savedInstance;
+        }
+        else
+        {
+            currentStageInstance = new StageInstance(0, 0);
+        }
+
+        StartStage(currentStageInstance);
+    }
+   
+    public void StartNextWaveInStage()
+    {
+        if(currentStageInstance.CheckEndOfWave())
+        {
+            currentStageInstance.currentWave++;
+            StartStage(currentStageInstance);
+        }
+        else
+        {
+            CompleteStage();
+        }
     }
 
-    // private StageInfo GetStageInfo(int stageKey)
-    // {
-    //     foreach (var stage in StageData.Stages)
-    //     {
-    //         //
-    //     }
-    // }
+    public void CompleteStage()
+    {
+        StageSaveManager.ClearSavedStage();
+
+        if (currentStageInstance == null)
+            return;
+
+        currentStageInstance.stageKey += 1;
+        currentStageInstance.currentWave = 0;
+        StartStage(currentStageInstance);
+    }
+
+    private StageInfo GetStageInfo(int stageKey)
+    {
+        foreach (var stage in StageData.Stages)
+        {
+            if (stage.stageKey == stageKey) return stage;
+        }
+        return null;
+    }
+
 
 }

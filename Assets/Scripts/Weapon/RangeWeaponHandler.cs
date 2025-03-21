@@ -21,19 +21,20 @@ public class RangeWeaponHandler : WeaponHandler
     public Color ProjectileColor { get { return projectileColor; } }
 
     private ProjectileManager projectileManager;
+    private StatHandler statHandler;
 	protected override void Start()
 	{
 		base.Start();
         projectileManager = ProjectileManager.Instance;
+        statHandler = GetComponentInParent<StatHandler>();
 	}
-
 
 	public override void Attack()
 	{
 		base.Attack();
 
         float projectilesAngleSpace = multipleProjectilesAngle;
-        int numberOfProjectilesPerShot = numberofProjectilesPerShot;
+        int numberOfProjectilesPerShot = numberofProjectilesPerShot + (int)statHandler.GetStat(StatType.ProjectileCount);
 
         float minAngle = -(numberOfProjectilesPerShot / 2f) * projectilesAngleSpace;
 

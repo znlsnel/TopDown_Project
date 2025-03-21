@@ -1,6 +1,7 @@
 using UnityEngine;
+using System;
 
-public class ProjectileController : MonoBehaviour
+public class ProjectileController : MonoBehaviour, IPoolable
 {
 	[SerializeField] private LayerMask levelCollisionLayer;
 
@@ -10,6 +11,7 @@ public class ProjectileController : MonoBehaviour
 	private Vector2 direction;
 	private bool isReady;
 	private Transform pivot;
+	private Action<GameObject> returnToPool;
 
 	private Rigidbody2D _rigidbody;
 	private SpriteRenderer spriteRenderer;
@@ -88,6 +90,23 @@ public class ProjectileController : MonoBehaviour
 	{
 		if (createFx)
 			projectileManager.CreateImpactParticlesAtPostion(position, rangeWeaponHandler);
-		Destroy(this.gameObject);
+		
+		OnDespawn();
+	}
+
+	public void Initialize(Action<GameObject> returnAction)
+	{
+		returnToPool = returnAction;
+	}
+
+	public void OnSpawn()
+	{
+		gameObject.SetActive(true);
+	}
+
+	public void OnDespawn()
+	{
+		returnToPool?.Invoke(gameObject);
+
 	}
 }

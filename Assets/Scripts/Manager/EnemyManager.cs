@@ -49,7 +49,7 @@ public class EnemyManager : MonoBehaviour
 		StopAllCoroutines();
 	}
 
-
+	[SerializeField] private List<GameObject> itemPrefabs;
 
 	private void SpawnRandomEnemy(string prefabName = null)
 	{
@@ -89,6 +89,13 @@ public class EnemyManager : MonoBehaviour
 		activeEnemies.Remove(enemy);
 		if (enemySpawnComplite && activeEnemies.Count == 0)
 			gameManager.EndOfWave();
+
+		CreateRandomItem(enemy.transform.position);
+	}
+
+	public void CreateRandomItem(Vector3 position)
+	{
+		GameObject item = Instantiate(itemPrefabs[Random.Range(0, itemPrefabs.Capacity)], position, Quaternion.identity); 
 	}
 
 	private void OnDrawGizmosSelected()
@@ -110,18 +117,21 @@ public class EnemyManager : MonoBehaviour
 			StartWave(1);
 	}
 
-    public void StartStage(WaveData waveData)
+    public void StartStage(StageInstance stageInstance)
     {
         if (waveRoutine != null)
-			StopCoroutine(waveRoutine);
+            StopCoroutine(waveRoutine);
 
-        waveRoutine = StartCoroutine(SpawnStart(waveData));
-    } 
+        waveRoutine = StartCoroutine(SpawnStart(stageInstance));
+    }
 
-	private IEnumerator SpawnStart(WaveData waveData)
+	private IEnumerator SpawnStart(StageInstance stageInstance)
 	{
 		enemySpawnComplite = false;
 		yield return new WaitForSeconds(timeBetweenWaves);
+
+		StageInfo stageInfo = stageInstance.currentStageInfo;
+		WaveData waveData = stageInfo.waves[stageInstance.currentWave];
 
 		for (int i = 0; i < waveData.monsters.Length; i++)
 		{
@@ -142,7 +152,7 @@ public class EnemyManager : MonoBehaviour
 			SpawnRandomEnemy(waveData.bossType);	
 		}
 		
-		enemySpawnComplite = true;
+		enemySpawnComplite = true; 
 	}
 
 
